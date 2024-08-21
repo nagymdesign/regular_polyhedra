@@ -1,0 +1,27 @@
+import bpy
+
+# Define vertices of the cube
+verts = [
+    (0, 0, 0), (2, 0, 0), (2, 2, 0), (0, 2, 0),  # Bottom face
+    (0, 0, 2), (2, 0, 2), (2, 2, 2), (0, 2, 2)   # Top face
+]
+# Define faces of the cube
+faces = [
+    (0, 1, 2, 3),  # Bottom face
+    (4, 5, 6, 7),  # Top face
+    (0, 4, 5, 1),  # Right face
+    (1, 5, 6, 2),  # Front face
+    (2, 6, 7, 3),  # Left face
+    (0, 3, 7, 4)   # Back face
+]
+# Create a new mesh object
+mesh = bpy.data.meshes.new("Plane")
+
+# Create a new object and link the mesh to it
+obj = bpy.data.objects.new("Plane", mesh)
+
+# Link the object to the current scene collection
+bpy.context.collection.objects.link(obj)
+
+# Create the mesh from the data (vertices and faces)
+mesh.from_pydata(verts, [], faces)

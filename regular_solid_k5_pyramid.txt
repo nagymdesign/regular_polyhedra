@@ -1,0 +1,37 @@
+import bpy
+import math
+
+# Calculate side length for a regular pyramid with base edge length 2
+base_edge_length = 2
+apothem = base_edge_length / (2 * math.tan(math.pi / 4))  # Apothem of the base
+height = 2  # Adjust height as needed
+
+# Define vertices
+verts = [
+    (-apothem, -apothem, 0),  # 0 (Bottom left)
+    (apothem, -apothem, 0),  # 1 (Bottom right)
+    (apothem, apothem, 0),  # 2 (Top right)
+    (-apothem, apothem, 0),  # 3 (Top left)
+    (0, 0, height)         # 4 (Apex)
+]
+
+# Define faces of the pyramid
+faces = [
+    (0, 1, 2, 3),  # Base face
+    (0, 1, 4),
+    (1, 2, 4),
+    (2, 3, 4),
+    (3, 0, 4)
+]
+
+# Create a new mesh object
+mesh = bpy.data.meshes.new("RegularPyramid")
+
+# Create a new object and link the mesh to it
+obj = bpy.data.objects.new("RegularPyramid", mesh)
+
+# Link the object to the current scene collection
+bpy.context.collection.objects.link(obj)
+
+# Create the mesh from the data (vertices and faces)
+mesh.from_pydata(verts, [], faces)

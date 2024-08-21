@@ -1,0 +1,34 @@
+import bpy
+import math
+
+# Calculate side length for a regular tetrahedron
+side_length = 2
+height = (side_length / (math.sqrt(6))) * math.sqrt(3)
+
+# Define vertices
+verts = [
+    (0, 0, 0),  # 0
+    (side_length, 0, 0),  # 1
+    (side_length / 2, side_length * math.sqrt(3) / 2, 0),  # 2
+    (side_length / 2, side_length / (2 * math.sqrt(3)), height)  # 3
+]
+
+# Define faces of the tetrahedron
+faces = [
+    (0, 1, 2),
+    (0, 1, 3),
+    (0, 2, 3),
+    (1, 2, 3)
+]
+
+# Create a new mesh object
+mesh = bpy.data.meshes.new("Tetrahedron")
+
+# Create a new object and link the mesh to it
+obj = bpy.data.objects.new("Tetrahedron", mesh)
+
+# Link the object to the current scene collection
+bpy.context.collection.objects.link(obj)
+
+# Create the mesh from the data (vertices and faces)
+mesh.from_pydata(verts, [], faces)
