@@ -1,0 +1,41 @@
+import bpy
+import math
+
+# Calculate side length for a regular pyramid with base edge length 2
+base_edge_length = 2
+apothem = base_edge_length / (2 * math.tan(math.pi / 4))  # Apothem of the base
+height = base_edge_length * math.sqrt(2) / 2  # Corrected line with colon
+
+# Define vertices
+verts = [
+    (-apothem, -apothem, 0),  # 0 (Bottom left)
+    (apothem, -apothem, 0),  # 1 (Bottom right)
+    (apothem, apothem, 0),  # 2 (Top right)
+    (-apothem, apothem, 0),  # 3 (Top left)
+    (0, 0, height),  # 4 (Apex)
+    (0, 0, -height)  # 5 (Bottom Apex)
+]
+
+# Define faces of the octahedron (same as before)
+faces = [
+    (0, 1, 4),
+    (1, 2, 4),
+    (2, 3, 4),
+    (3, 0, 4),
+    (0, 1, 5),
+    (1, 2, 5),
+    (2, 3, 5),
+    (3, 0, 5)
+]
+
+# Create a new mesh object
+mesh = bpy.data.meshes.new("Octahedron")
+
+# Create a new object and link the mesh to it
+obj = bpy.data.objects.new("Octahedron", mesh)
+
+# Link the object to the current scene collection
+bpy.context.collection.objects.link(obj)
+
+# Create the mesh from the data (vertices and faces)
+mesh.from_pydata(verts, [], faces)
